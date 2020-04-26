@@ -3,7 +3,6 @@ import Base from "../core/Base"
 import {Link, Redirect} from "react-router-dom"
 import {signin, authenticate, isAutheticated } from "../auth/helper/index"
 
-
 const Signin = () => {
 
     const [values, setValues] = useState({
@@ -27,11 +26,9 @@ const Signin = () => {
         .then(data=>{
             if(data.err){
                 setValues({...values,error:data.err,loading:false})
-                console.log("error in server")
             }
             else if(data.errmsgs){
                 setValues({...values,error:data.errmsgs,loading:false})
-                console.log("error in validation")
             }
             else{
                 authenticate(data,()=>{
@@ -66,11 +63,12 @@ const Signin = () => {
 
     const loadingMessage = () => {
         return loading && (
-            <div className="alert alert-info"><h2>loading......</h2></div>
+            <div className="container">
+            <div className="alert alert-info text-center"><p>loading......</p></div>
+            </div>
             )
     }
         
-
     const errorMessage = () => {
                 return <div className="container" style={{display: error ?  "" : "none" }}>
                     <div className="alert alert-danger alert-dismissible fade show">
@@ -84,8 +82,8 @@ const Signin = () => {
 
     const signInForm = () =>{
         return (
-            <div className="container">
-                <div className="row">
+        <div className="container">
+            <div className="row">
                 <div className="col-md-6 offset-md-3 text-center">
                     <form>
                         <div className="form-group">
@@ -102,7 +100,7 @@ const Signin = () => {
                     </form>
                 </div>
             </div>
-            </div>
+        </div>
         )
     }
 

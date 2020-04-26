@@ -27,7 +27,11 @@ const Signup = () => {
         signup({name,lastname,email,password})
         .then(data => {
             if(data.errmsgs){
-                setValues({...values,error:data.errmsgs,success:false})
+                setValues({...values,error:data,success:false})
+                console.log(data)
+            }
+            else if(data.err){
+                setValues({...values,error:data,success:false})
                 console.log(data)
             }
             else{
@@ -91,17 +95,29 @@ const Signup = () => {
 
     const errorMessage = () => {
         if(error){
-            const msgs = error.map((e,i)=>{
-                return <div className="alert alert-danger alert-dismissible fade show" key={i}>
-                {e.msg}
-                 <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>                 
-             </div>
-            })
-            return (<div className="container">
-                {msgs}
-            </div> )
+            if(error.errmsgs){
+                const msgs = error.errmsgs.map((e,i)=>{
+                    return <div className="alert alert-danger alert-dismissible fade show" key={i}>
+                    {e.msg}
+                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>                 
+                 </div>
+                })
+                return (<div className="container">
+                    {msgs}
+                </div> )
+            }
+            else{
+                return (<div className="container">
+                     <div className="alert alert-danger alert-dismissible fade show">
+                    {error.err}Email already exists.
+                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>                 
+                 </div>
+                </div> )
+            }
         }
     }
 

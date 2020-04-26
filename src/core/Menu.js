@@ -28,12 +28,16 @@ const Menu = ({history}) => (
             <li className="nav-item">
                 <Link className="nav-link" style={currentTab(history,"/cart")} to="/cart">Cart</Link>
             </li>
+            {isAutheticated()  && !isAutheticated().user.role && (
             <li className="nav-item">
-                <Link className="nav-link" style={currentTab(history,"/user/dashboard")} to="/user/dashboard">U.Dashboard</Link>
+                <Link className="nav-link" style={currentTab(history,"/user/dashboard")} to="/user/dashboard">Dashboard</Link>
             </li>
+            )}
+            {isAutheticated() && isAutheticated().user.role && (
             <li className="nav-item">
-                <Link className="nav-link" style={currentTab(history,"/admin/dashboard")} to="/admin/dashboard">Admin-dashboard</Link>
+                <Link className="nav-link" style={currentTab(history,"/admin/dashboard")} to="/admin/dashboard">Dashboard</Link>
             </li>
+            )}
             {!isAutheticated() && (<>
             <li className="nav-item">
                 <Link className="nav-link" style={currentTab(history,"/signup")} to="/signup">Signup</Link>
