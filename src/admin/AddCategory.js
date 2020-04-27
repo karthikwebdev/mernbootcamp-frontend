@@ -30,7 +30,6 @@ const AddCategory = () => {
         setSuccess(false)
         createCategory(user._id,token,{name})
             .then(data =>{
-                console.log(data)
                 if(data.error){
                     setError(true)
                 }else{
@@ -51,12 +50,35 @@ const AddCategory = () => {
         </form>
     )
 
+    const successMessage = () => (
+        success && (
+            <div className="alert alert-success alert-dismissible fade show text-center mt-3">
+                category successfully added....
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                 
+            </div>
+        )
+    )
+
+    const errorMessage = () => (
+        error && (
+            <div className="alert alert-danger alert-dismissible fade show text-center mt-3">
+                category already exists...
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>                 
+            </div>
+        )
+    )
+
     return (
         <Base title="create category" description="Add a new category for T-Shirts" className="container p-4">
             <div className="row bg-light rounded">
                 <div className="col-8 offset-2">
                     {goBack()}
-                    
+                    {successMessage()}
+                    {errorMessage()}
                     {myCategoryForm()}
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Base from "../core/Base"
-import {Link, Redirect} from "react-router-dom"
-import {signin, authenticate, isAutheticated } from "../auth/helper/index"
+import { Link, Redirect } from "react-router-dom"
+import { signin, authenticate, isAutheticated } from "../auth/helper/index"
 
 const Signin = () => {
 
@@ -64,7 +64,7 @@ const Signin = () => {
     const loadingMessage = () => {
         return loading && (
             <div className="container">
-            <div className="alert alert-info text-center"><p>loading......</p></div>
+            <div className="alert alert-info text-center h3">Loading.....</div>
             </div>
             )
     }
