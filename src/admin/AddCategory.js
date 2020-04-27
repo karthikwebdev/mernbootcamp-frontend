@@ -6,7 +6,7 @@ import {createCategory} from "./helper/adminapicall"
 
 const AddCategory = () => {
 
-    const [name, setName] = useState("beach")
+    const [name, setName] = useState("")
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
 
@@ -34,6 +34,7 @@ const AddCategory = () => {
                     setError(true)
                 }else{
                     setError("")
+                    setName("")
                     setSuccess(true)
                 }
             })
