@@ -52,7 +52,7 @@ const AdminDashboard = () => {
     )
 
     return (
-        <Base title="" description="Manage all your products and orders here" className="container bg-light p-4">
+        <Base title="Welcome Admin" description="Manage all your products and orders here" className="container bg-light p-4">
                 <div className="row">
                     <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                     {adminLeftSide()}

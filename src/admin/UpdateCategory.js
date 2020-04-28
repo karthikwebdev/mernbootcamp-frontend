@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, { useState,useEffect } from 'react'
 import Base from '../core/Base'
 import { isAutheticated } from '../auth/helper'
 import { Link,Redirect } from 'react-router-dom'
-import {createCategory} from "./helper/adminapicall"
+import { updateCategory,getCategory } from './helper/adminapicall'
 
-const AddCategory = () => {
 
+const UpdateCategory = ({match}) => {
+
+    
     const [name, setName] = useState("")
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -23,12 +25,22 @@ const AddCategory = () => {
         setName(event.target.value)
     }
 
+    const preload= (categoryId) =>{
+        getCategory(categoryId)
+        .then(data =>{
+            setName(data.name)
+        } )
+    }
+
+    useEffect(() => {
+       preload(match.params.categoryId)
+    }, [])
     
     const onSubmit = (event) =>{
         event.preventDefault()
         setError("");
         setSuccess(false)
-        createCategory(user._id,token,{name})
+        updateCategory(match.params.categoryId,user._id,token,{name})
             .then(data =>{
                 if(data.error){
                     setError(data.error)
@@ -46,7 +58,7 @@ const AddCategory = () => {
                 <label >Enter Category
                 </label>
                 <input className="form-control" type="text" onChange={handleChange} value={name} autoFocus required placeholder="For Ex. Summer " />
-                <button className="btn btn-dark text-light mt-3" onClick={onSubmit} >create category</button>
+                <button className="btn btn-dark text-light mt-3" onClick={onSubmit} >update category</button>
             </div>
         </form>
     )
@@ -92,4 +104,4 @@ const AddCategory = () => {
     )
 }
 
-export default AddCategory
+export default UpdateCategory

@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import Base from '../core/Base'
-import { Link } from 'react-router-dom'
+import { Link,Redirect } from 'react-router-dom'
 import { getCategories, createaProduct } from './helper/adminapicall'
 import { isAutheticated } from '../auth/helper/index'
 
@@ -8,7 +8,7 @@ const AddProduct = () => {
 
     const {user,token} = isAutheticated()
 
-const [values, setValues] = useState({
+    const [values, setValues] = useState({
     name:"",
     description:"",
     price:"",
@@ -21,9 +21,10 @@ const [values, setValues] = useState({
     createdProduct:"",
     getaRedirect: false,
     formData:""
-});
+    });
 
-    const {name, description, price, stock,categories, category, loading, error, createdProduct, getaRedirect, formData } = values
+    const { name, description, price, stock, categories, category, loading, error, createdProduct, getaRedirect, formData } = values
+   
     const preload = () => {
         getCategories().then(data => {
             if(data.error){
@@ -48,27 +49,40 @@ const [values, setValues] = useState({
             if(data.error){
                 setValues({...values,error:data.error})
             }else{
-                setValues({...values,name:"",description:"",price:"",photo:"",stock:"",loading:false,createdProduct:data.name})
+                setValues({...values,name:"",description:"",price:"",photo:"",stock:"",loading:false,createdProduct:data.name,getaRedirect:true})
             }
         })
     }
 
-    const successMessage = () => (
-        <div className="alert alert-success mt-3" style={{display: createdProduct ? "" : "none" }}>
-            {createdProduct} created successfully
-        </div>
+    const successMessage = () => {
+      return (<div className="alert alert-success mt-3" style={{display: createdProduct ? "" : "none" }}>
+                {createdProduct} created successfully
+              </div>)
+    } 
+      
+    const errorMessage = () => {
+      return (<div className="alert alert-danger mt-3" style={{display: error ? "" : "none" }}> {error} </div>)
+   
+    }
+
+    const loadingMessage = () => (
+      <div className="alert alert-warning mt-3" style={{display: loading ? "" : "none" }}>
+          loading.....
+      </div>
     )
 
-    const errorMessage = () => (
-        <div className="alert alert-success mt-3" style={{display: error ? "" : "none" }}>
-            {error}
-        </div>
-    )
+     const makeRedirect = ()=>{
+      return setTimeout(() =>{
+        return getaRedirect && (<Redirect to="/admin/dashboard" />)
+      }, 2000); 
+
+     }
+
 
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value
         formData.set(name,value);
-        setValues({...values,[name]:value})
+        setValues({...values,[name]:value,error:""})
     }
 
     const createProductForm = () => (
@@ -131,10 +145,12 @@ const [values, setValues] = useState({
       );
 
     return (
-        <Base title="Add Product Here!" description="this is a place to add new products" className="container bg-light p-4">
+        <Base title="Add Product Here!" description="this is a place to add new products" className="container bg-light p-4 text-light">
         <Link to="/admin/dashboard" className="btn btn-sm btn-dark">Go Back</Link>
         <div className="row rounded">
             <div className="col-8 offset-2">
+                {makeRedirect()}
+                {loadingMessage()}
                 {errorMessage()}
                 {successMessage()}
                 {createProductForm()}
