@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const AdminDashboard = () => {
 
-    const {user:{name,email,role}} = isAutheticated()
+    const {user:{name,email,_id}} = isAutheticated()
 
     const adminLeftSide = () => {
         return (
@@ -52,13 +52,14 @@ const AdminDashboard = () => {
     )
 
     return (
-        <Base title="Welcome Admin" description="Manage all your products and orders here" className="container bg-light p-4">
+        <Base title="Welcome Admin" description="Manage all your products and orders here" className="container bg-light p-4 mb-5">
                 <div className="row">
                     <div className="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                     {adminLeftSide()}
                     </div>
                     <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                    {adminRightSide()}        
+                    {adminRightSide()}
+                <Link className="btn btn-info" to={`/user/update/${_id}`}>Update Details</Link>
                     </div>
                 </div>
         </Base>

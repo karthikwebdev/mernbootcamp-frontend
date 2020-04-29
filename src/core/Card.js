@@ -60,7 +60,7 @@ removeFromCart = false,
   )
 
         return (
-          <div className="card text-white bg-light m-lg-3 m-md-2 mx-5 my-3 text-center text-capitalize">
+          <div className="card text-white bg-light m-lg-3 m-md-2 mx-2 my-3 text-center text-capitalize">
             <div className="card-header lead text-dark">{cardTitle}</div>
             <div className="card-body">
               {getRedirect(redirect)}

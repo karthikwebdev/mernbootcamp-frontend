@@ -3,11 +3,12 @@ import Base from "../core/Base"
 import { Link, Redirect } from "react-router-dom"
 import { signin, authenticate, isAutheticated } from "../auth/helper/index"
 
+
 const Signin = () => {
 
     const [values, setValues] = useState({
-        email:"admin@gmail.com",
-        password:"admin123",
+        email:"",
+        password:"",
         error:"",
         loading:false,
         didRedirect: false
@@ -105,11 +106,11 @@ const Signin = () => {
     }
 
     return (
-        <Base title="Signin page" description="a page for user to signin!!!!">
+        <Base title="Signin page" description="a page for user to signin!!!!" className="text-center">
             {loadingMessage()}
             {errorMessage()}
             {signInForm()}
-            <p className="text-white text-center">{JSON.stringify(values)}</p>
+            <div className="text-white-50 mt-2">Not a user?? <Link to="/signup">Signup here</Link></div>
             {performRedirect()}
         </Base>
     )

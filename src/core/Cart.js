@@ -1,8 +1,8 @@
 import React, {useEffect,useState} from 'react'
-import { API } from '../backend'
 import Base from './Base'
 import Card from './Card'
 import { loadCart } from './helper/cartHelper'
+import { Link } from 'react-router-dom'
 
 function Cart() {
 
@@ -14,16 +14,19 @@ function Cart() {
        setproducts(loadCart())
     }, [])
     
-    const loadAllProducts = () => {
-        return (
+    const loadAllProducts = () => (
+        products.length ? (
             <div>
                 {products.map((product,index)=>(
                     <Card key={index} product={product} addToCart={false} removeFromCart={true} />
                 ))}
             </div>
-        ) 
-    }
-
+        ) : (<div className="text-center">
+        <div className="text-light">No Products in the Cart</div>
+        <Link to="/" className="btn btn-sm btn-info">Go to home</Link>
+        </div>)
+    
+    )
     const loadCheckout = () => {
         return (
             <div>
@@ -33,7 +36,7 @@ function Cart() {
     }
 
     return (
-        <Base title="cart Page" description="checkout here......." className="container">
+        <Base title="Cart Page" description="checkout here......." className="container">
             
             <div className="row">
               <div className="col-lg-6 col-12 p-5">

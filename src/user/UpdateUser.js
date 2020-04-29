@@ -1,33 +1,56 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Base from "../core/Base"
 import { Link } from "react-router-dom"
-import { signup, validate } from "../auth/helper/index"
+import { validate, isAutheticated } from "../auth/helper/index"
+import { getUser,updateUser } from "./helper/userapicalls";
 
-const Signup = () => {
+
+const UpdateUser = () => {
 
     const [values,setValues] = useState({
         name:"",
         lastname:"",
         email:"",
-        password:"",
-        confirm:"",
         error:"",
         success:false
     })
 
-    const {name, email, password, confirm, lastname, error, success} = values
+
+    const {name, email, lastname, error, success} = values
+    const {token,user} = isAutheticated()
 
     //higher order functions
     const handleChange = name => event => {
         setValues({...values,error:false,[name]:event.target.value})
     }
 
+  
+    const preload = () => {
+        getUser(user._id,token)
+        .then(data =>{
+            if(data.error){
+                console.log(data.error)
+            }else{
+                setValues({
+                    ...values,
+                    name:data.name,
+                    lastname:data.lastname,
+                    email:data.email
+                })
+            }
+        })
+    }
+
+    useEffect(() => {
+        preload()
+    }, [])
+
     const onSubmit = event => {
         event.preventDefault()
-        if(password === confirm){
             setValues({...values,error:false})
-            signup({name, lastname, email, password})
+            updateUser({name, lastname, email},user._id,token)
             .then(data => {
+                console.log(data)
                 if(data.errmsgs){
                     setValues({...values,error:data,success:false})
                     console.log(data)
@@ -47,13 +70,10 @@ const Signup = () => {
                         success:true
                     })
                 }
-            })    
-        }else{
-            setValues({...values,error:true})
-        }
+            })
     }
 
-    const signUpForm = () =>{
+    const updateForm = () =>{
         return (
             <div className="container">
             <div className="row">
@@ -74,19 +94,6 @@ const Signup = () => {
                                 <input type="email" className="form-control" onChange={handleChange("email")} value={email} />
                             </label>
                         </div>
-                        <div className="form-group">
-                            <label className="text-light">Password
-                                <input type="password" className="form-control" onChange={handleChange("password")} value={password}/>
-                                <span className={validate(password)[2]}>{validate(password)[1]}</span>
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label className="text-light">Confirm Password
-                                <input type="password" className="form-control" onChange={handleChange("confirm")} value={confirm} />
-                                <span className="text-success">{(password === confirm && password !== "" ) ? "matched" : ""}</span>
-                            </label>
-                        </div>
-                        <small id="passwordHelpBlock" className="form-text text-muted mb-2">{validate(password)[0]}</small>
                         <button className="btn btn-success" onClick={onSubmit}>Submit</button>
                     </form>
                 </div>
@@ -98,7 +105,7 @@ const Signup = () => {
     const successMessage = () => (
         <div className="container">
         <div className="alert alert-success alert-dismissible fade show" style={{display: success ?  "" : "none" }} >
-            new account was created successfully. please <Link to="/signin">Login here</Link>
+            details updated successfully.
             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -131,29 +138,16 @@ const Signup = () => {
                  </div>
                 </div> )
             }
-            else{
-                return (<div className="container">
-                     <div className="alert alert-danger alert-dismissible fade show">
-                        password and confirm password didn't match
-                     <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                         <span aria-hidden="true">&times;</span>
-                     </button>                 
-                 </div>
-                </div> )
-            }
         }
     }
 
     return (
-        <Base title="Signup page" description="a page for user to signup!!!!" className="text-center mb-5">
+        <Base title="Update Details" description="a page to update details!!!!">
             {successMessage()}
             {errorMessage()}
-            {signUpForm()}
-            <div className="mt-3">
-            <span className="text-white-50">Already a user!..</span><Link to="/signin">Signin here</Link>
-            </div>
+            {updateForm()}
         </Base>
     )
 };
 
-export default Signup;
+export default UpdateUser;

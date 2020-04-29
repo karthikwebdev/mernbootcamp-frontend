@@ -16,6 +16,7 @@ import UpdateProduct from './admin/UpdateProduct'
 import UpdateCategory from './admin/UpdateCategory'
 import Cart from './core/Cart'
 import Reload from './core/Reload'
+import UpdateUser from './user/UpdateUser'
 
 
 const Routes = () => {
@@ -26,6 +27,7 @@ const Routes = () => {
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Signin} />
                 <PrivateRoute  path="/user/dashboard" exact component={UserDashboard} />
+                <PrivateRoute  path="/user/update/:userId" exact component={UpdateUser} />
                 <PrivateRoute  path="/cart" exact component={Cart} />
                 <PrivateRoute  path="/reload" exact component={Reload} />
                 <AdminRoute  path="/admin/dashboard" exact component={AdminDashboard} />
