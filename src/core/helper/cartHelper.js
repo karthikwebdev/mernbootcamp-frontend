@@ -26,7 +26,7 @@ export const removeItemFromCart = (productId,next) => {
         if(localStorage.getItem("cart")){
             cart = JSON.parse(localStorage.getItem("cart"))
         }
-        cart.map((product,i)=>{
+        cart.map((product,i) => {
             if(product._id === productId){
                 cart.splice(i,1)
             }
@@ -34,4 +34,13 @@ export const removeItemFromCart = (productId,next) => {
         localStorage.setItem("cart",JSON.stringify(cart))
 }
 next()
+}
+
+export const cartEmpty = next => {
+    if(typeof window !== "undefined"){
+        if(localStorage.getItem("cart")){
+            localStorage.removeItem("cart");
+            next();
+        }
+    }
 }

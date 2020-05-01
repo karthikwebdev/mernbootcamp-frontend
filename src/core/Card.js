@@ -1,8 +1,7 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 import ImageHelper from './helper/ImageHelper';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { addItemToCart, removeItemFromCart } from './helper/cartHelper'
-
 
 const Card = ({product,
 addToCart = true,
@@ -24,11 +23,7 @@ removeFromCart = false,
     removeItemFromCart(productId,()=> setreload(true))
   }
 
-  const getRedirect = () =>{
-    if(redirect){
-      return <Redirect to="/cart" />
-    }
-  }
+  const getRedirect = () => redirect && (<Redirect to="/cart" />)
 
   const getReload = () => (
     reload && (
@@ -45,7 +40,6 @@ removeFromCart = false,
       </div>
      )
   )
-
 
   const showRemoveFromCart = (removeFromCart) => (
     removeFromCart && (
@@ -73,6 +67,9 @@ removeFromCart = false,
               <div className="row">
                {showAddToCart(addToCart)}
                 {showRemoveFromCart(removeFromCart)}
+                <div className="col-12">
+                  <Link className="btn btn-block btn-info mt-2 mb-2" to={`/product/view/${product._id}`}> View Product </Link>
+                </div>
               </div>
             </div>
           </div>

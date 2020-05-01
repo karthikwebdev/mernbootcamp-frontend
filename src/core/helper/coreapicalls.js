@@ -1,7 +1,7 @@
 import { API } from "../../backend";
 
-export const getProducts = () => {
-    return fetch(`${API}/products`,{
+export const getProducts = (query) => {
+    return fetch(`${API}/products?${query}`,{
         method:'GET'
     })
     .then(res => res.json())

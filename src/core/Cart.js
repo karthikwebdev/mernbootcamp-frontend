@@ -3,6 +3,7 @@ import Base from './Base'
 import Card from './Card'
 import { loadCart } from './helper/cartHelper'
 import { Link } from 'react-router-dom'
+import StripeCheckout from './StripeCheckout'
 
 function Cart() {
 
@@ -31,6 +32,7 @@ function Cart() {
         return (
             <div>
                 <h1>this is to checkout products</h1>
+                {StripeCheckout(products)}
             </div>
         ) 
     }

@@ -17,6 +17,7 @@ import UpdateCategory from './admin/UpdateCategory'
 import Cart from './core/Cart'
 import Reload from './core/Reload'
 import UpdateUser from './user/UpdateUser'
+import ViewProduct from './core/ViewProduct'
 
 
 const Routes = () => {
@@ -24,6 +25,7 @@ const Routes = () => {
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={Home} />
+                <Route path="/product/view/:productId" exact component={ViewProduct} />
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Signin} />
                 <PrivateRoute  path="/user/dashboard" exact component={UserDashboard} />

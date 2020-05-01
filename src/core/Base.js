@@ -1,5 +1,7 @@
 import React from 'react'
 import Menu from './Menu'
+import { Link } from 'react-router-dom'
+
 
 const Base = ({
     title="my title",
@@ -17,6 +19,9 @@ const Base = ({
                     <p className="lead">{description}</p>
                 </div>
                 <div className={className}>{children}</div>
+            </div>
+            <div className="footer text-center text-muted mt-5 mb-3">
+                made with love by <span className="text-white">karthik web dev</span> and sincere credits to <a href="https://learncodeonline.in/">LearnCodeOnline</a>
             </div>
         </div>
     )
