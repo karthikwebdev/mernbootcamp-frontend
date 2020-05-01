@@ -5,6 +5,7 @@ import { loadCart } from './helper/cartHelper'
 import { Link } from 'react-router-dom'
 import StripeCheckout from './StripeCheckout'
 
+
 function Cart() {
 
     const [products, setproducts] = useState([]);

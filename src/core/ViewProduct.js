@@ -51,6 +51,7 @@ const ViewProduct = ({match}) => {
                 <h1 className="text-center text-lg-left text-white-50">{product.name}</h1>
                 <h5 className="text-center text-lg-left">{product.description}</h5>
                 <h3 className="text-center text-lg-left display-2"><span className="h5 mr-2">price:</span>${product.price}</h3>
+                <p className="text-muted">Stock Available: {product.stock}</p>
                 <button className="btn btn-block btn-success" onClick={addToTheCart}> add to cart </button>
             </div>
         </div>

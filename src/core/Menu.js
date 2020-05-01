@@ -15,7 +15,7 @@ const currentTab = (history,path)=>{
 const Menu = ({history}) => (
            <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
-            <p className="navbar-brand" href="#">T-Store</p>
+        <p className="navbar-brand" href="#">{`{ codeZone }`}</p>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>

@@ -50,8 +50,8 @@ function Home() {
                         <option  value={`sortBy=price&order=-1`}>price(high-low)</option>
                         <option  value={`sortBy=price&order=1`}>price(low-high)</option>
                         <option  value={`sortBy=createdAt&order=1`}>latest(new-old)</option>
-                        <option  value={`sortBy=stock&order=1`}>stock(high-low)</option>
-                        <option  value={`sortBy=stock&order=-1`}>stock(low-high)</option>
+                        <option  value={`sortBy=stock&order=-1`}>stock(high-low)</option>
+                        <option  value={`sortBy=stock&order=1`}>stock(low-high)</option>
                     </select>
                 </div>
             </form>
@@ -60,7 +60,7 @@ function Home() {
        )
 
     return (
-        <Base title="Home Page" description="Welcome to the T-Store......." className="container">
+        <Base title="{ codezone }" description="root directory for every coder.." className="container">
             {selectSortBy()}
             <div className="row">
                {products.map((product,index)=>(

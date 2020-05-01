@@ -14,6 +14,7 @@ removeFromCart = false,
   const cardTitle = product ? product.name : "a sample photo"
   const cardDescription = product ? product.description : "a sample photo description"
   const cardPrice = product ? product.price : "price"
+  const cardStock = product ? product.stock : "stock"
 
   const addToTheCart = () => {
     addItemToCart(product,()=> setredirect(true))
@@ -64,6 +65,7 @@ removeFromCart = false,
                 {cardDescription}
               </p>
               <h1 className=" font-italic text-dark">${cardPrice}</h1>
+              <p className="text-black-50">stock available:{cardStock}</p>
               <div className="row">
                {showAddToCart(addToCart)}
                 {showRemoveFromCart(removeFromCart)}
