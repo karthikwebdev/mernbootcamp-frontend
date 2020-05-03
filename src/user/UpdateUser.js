@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import Base from "../core/Base"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import { validate, isAutheticated } from "../auth/helper/index"
 import { getUser,updateUser } from "./helper/userapicalls";
 
@@ -103,14 +103,9 @@ const UpdateUser = () => {
     }
 
     const successMessage = () => (
-        <div className="container">
-        <div className="alert alert-success alert-dismissible fade show" style={{display: success ?  "" : "none" }} >
-            details updated successfully.
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        </div>
+        success && (
+            <Redirect to="/user/dashboard" />
+        ) 
     )
 
     const errorMessage = () => {

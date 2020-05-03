@@ -8,7 +8,7 @@ export const addItemToCart = (item,next)=>{
             ...item
         })
         localStorage.setItem("cart",JSON.stringify(cart))
-        next()
+        next(item)
     }
 }
 
@@ -40,6 +40,7 @@ export const cartEmpty = next => {
     if(typeof window !== "undefined"){
         if(localStorage.getItem("cart")){
             localStorage.removeItem("cart");
+            localStorage.setItem("cart","[]")
             next();
         }
     }

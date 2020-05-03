@@ -16,8 +16,8 @@ function Cart() {
        setproducts(loadCart())
     }, [])
     
-    const loadAllProducts = () => (
-        products.length ? (
+    const loadAllProducts = (products) => (
+        products && products.length ? (
             <div>
                 {products.map((product,index)=>(
                     <Card key={index} product={product} addToCart={false} removeFromCart={true} />
@@ -32,7 +32,6 @@ function Cart() {
     const loadCheckout = () => {
         return (
             <div>
-                <h1>this is to checkout products</h1>
                 {StripeCheckout(products)}
             </div>
         ) 
@@ -43,7 +42,7 @@ function Cart() {
             
             <div className="row">
               <div className="col-lg-6 col-12 p-5">
-                  {loadAllProducts()}
+                  {loadAllProducts(products)}
               </div>
               <div className="col-lg-6 col-12 p-5">
                   {loadCheckout()}

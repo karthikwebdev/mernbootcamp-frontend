@@ -3,16 +3,14 @@ import Base from './Base'
 import ImageHelper from './helper/ImageHelper'
 import { getSingleProduct } from './helper/viewHelper'
 import { Link } from 'react-router-dom'
-import { addItemToCart, removeItemFromCart } from './helper/cartHelper'
-
-
+import { addItemToCart } from './helper/cartHelper'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ViewProduct = ({match}) => {
 
     const [product, setproduct] = useState({})
-    const [success, setsuccess] = useState(false);
 
-    
     const loadProduct = (productId) => {
         getSingleProduct(productId)
         .then(data => {
@@ -31,17 +29,13 @@ const ViewProduct = ({match}) => {
 
     
   const addToTheCart = () => {
-    addItemToCart(product,()=> setsuccess(true))
-  }
-
-  const successMessage = (success,product) => {
-    return  success && (<div className="alert alert-success">{product.name} added to cart successfully</div>) 
-
+    addItemToCart(product,(product)=>{
+        toast.success(`${product.name} added to cart successfully`,{position:toast.POSITION.TOP_RIGHT,className:'bg-success text-light'})        
+    })
   }
 
     const viewPage = (product) => (
         <>
-        {successMessage(success,product)}
         <Link className="mx-3 btn btn-info btn-sm" to="/">Go Back</Link>
         <div className="row">
             <div className="col-lg-6 col-12">

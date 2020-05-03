@@ -2,13 +2,14 @@ import React, {useState} from 'react'
 import ImageHelper from './helper/ImageHelper';
 import { Redirect, Link } from 'react-router-dom';
 import { addItemToCart, removeItemFromCart } from './helper/cartHelper'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+ 
 const Card = ({product,
 addToCart = true,
 removeFromCart = false,
 }) => {
 
-  const [redirect, setredirect] = useState(false);
   const [reload, setreload] = useState(false);
 
   const cardTitle = product ? product.name : "a sample photo"
@@ -17,14 +18,17 @@ removeFromCart = false,
   const cardStock = product ? product.stock : "stock"
 
   const addToTheCart = () => {
-    addItemToCart(product,()=> setredirect(true))
+    addItemToCart(product,(product)=> {
+      toast.success(`${product.name} added to cart successfully`,{position:toast.POSITION.TOP_RIGHT,className:'text-light'});
+    })
   }
 
   const removeAndReload = (productId) =>{
-    removeItemFromCart(productId,()=> setreload(true))
+    removeItemFromCart(productId,()=> {
+      setreload(true)
+      toast.error(`item removed from the cart`,{position:toast.POSITION.TOP_RIGHT,className:'text-light'})
+    })
   }
-
-  const getRedirect = () => redirect && (<Redirect to="/cart" />)
 
   const getReload = () => (
     reload && (
@@ -58,7 +62,6 @@ removeFromCart = false,
           <div className="card text-white bg-light m-lg-3 m-md-2 mx-2 my-3 text-center text-capitalize">
             <div className="card-header lead text-dark">{cardTitle}</div>
             <div className="card-body">
-              {getRedirect(redirect)}
               {getReload(reload)}
               <ImageHelper product= {product} />
               <p className="text-wrap h6 text-black-50">

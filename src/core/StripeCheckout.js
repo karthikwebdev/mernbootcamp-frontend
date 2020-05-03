@@ -1,9 +1,10 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState }  from 'react'
 import { isAutheticated } from '../auth/helper'
-import { cartEmpty, loadCart } from './helper/cartHelper'
-import { Link } from 'react-router-dom'
+import { cartEmpty } from './helper/cartHelper'
+import { Link, Redirect } from 'react-router-dom'
 import StripeCheckoutButton from "react-stripe-checkout"
-
+import { API } from '../backend'
+import { createOrder } from './helper/orderHelper'
 
 const StripeCheckout = (products) => {
 
@@ -14,12 +15,10 @@ const StripeCheckout = (products) => {
         address:""
     });
 
-    const {token} = isAutheticated()
-    const userId  = isAutheticated().user._id
+    const { success } = data
 
     const getFinalAmount = (products) => {
         let amount = 0
-        console.log(products)
         products.map(product => {
             amount = amount + product.price
         })
@@ -27,16 +26,40 @@ const StripeCheckout = (products) => {
     }
 
     const makePayment = (token) => {
-        
+        const body = {
+            token,products
+        }
+        const headers = {
+            "Content-Type":"application/json"
+        }
+        return fetch(`${API}/stripepayment`,{
+            method:"POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(res => res.json())
+        .then(data => {
+            const {city,country,line1,postal_code,name} = data.shipping.address
+            const transaction_id = data.id;
+            const amount = data.amount / 100;
+            const address = `${name},${line1},${city},${postal_code},${country}`
+            createOrder(isAutheticated().user._id,isAutheticated().token,{transaction_id,amount,address,products})
+            .then(res => {
+                cartEmpty(()=>{
+                    setdata({success:true})
+                })
+            })
+            .catch(err => console.log(err))
+        })
+        .catch(err => console.log(err))
     }
 
     const showStripeButton = () => {
         return isAutheticated() ? (
             <StripeCheckoutButton 
-            stripeKey=""
-            token={makePayment()}
+            stripeKey="pk_test_QMKZD89sJAUimiPDBud2OUCD00gcbSGhZU"
+            token={makePayment}
             amount={getFinalAmount(products) * 100}
-            name="Buy T-Shirts"
+            name="pay for books here"
             shippingAddress
             billingAddress
             >
@@ -47,11 +70,17 @@ const StripeCheckout = (products) => {
         </Link>)
     }
 
+    const successMessage = () => (
+        success && (<Redirect to="/reload" />)
+    )
 
-    return (  
+    return (
+        <div>
+        {successMessage()}
         <div className="text-center">
-           <h3 className="text-white">Stripe checkout{getFinalAmount(products)}</h3>
-           {showStripeButton()} 
+           <h5 className="text-white">Stripe checkout: <p>${getFinalAmount(products)}</p></h5>
+           {showStripeButton()}
+        </div>
         </div>
     )
 }
