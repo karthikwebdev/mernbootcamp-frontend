@@ -3,6 +3,8 @@ import Base from '../core/Base'
 import { Link,Redirect } from 'react-router-dom'
 import { getCategories, createaProduct } from './helper/adminapicall'
 import { isAutheticated } from '../auth/helper/index'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProduct = () => {
 
@@ -23,7 +25,7 @@ const AddProduct = () => {
     formData:""
     });
 
-    const { name, description, price, stock, categories, category, loading, error, createdProduct, getaRedirect, formData } = values
+    const { name, description, price, stock, categories, loading, error, getaRedirect, formData } = values
    
     const preload = () => {
         getCategories().then(data => {
@@ -47,18 +49,13 @@ const AddProduct = () => {
         createaProduct(user._id, token, formData)
         .then(data =>{
             if(data.error){
-                setValues({...values,error:data.error})
+                setValues({...values, error:data.error})
             }else{
-                setValues({...values,name:"",description:"",price:"",photo:"",stock:"",loading:false,createdProduct:data.name,getaRedirect:true})
+                toast.success(`${data.name} created successfully`,{position:toast.POSITION.TOP_RIGHT,className:'text-light'});     
+                setValues({...values,name:"",description:"",price:"",photo:"",stock:"",loading:false,getaRedirect:true})
             }
         })
     }
-
-    const successMessage = () => {
-      return (<div className="alert alert-success mt-3" style={{display: createdProduct ? "" : "none" }}>
-                {createdProduct} created successfully
-              </div>)
-    } 
       
     const errorMessage = () => {
       return (<div className="alert alert-danger mt-3" style={{display: error ? "" : "none" }}> {error} </div>)
@@ -152,7 +149,6 @@ const AddProduct = () => {
                 {makeRedirect()}
                 {loadingMessage()}
                 {errorMessage()}
-                {successMessage()}
                 {createProductForm()}
             </div>
         </div>

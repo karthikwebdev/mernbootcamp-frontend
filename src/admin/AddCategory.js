@@ -3,6 +3,8 @@ import Base from '../core/Base'
 import { isAutheticated } from '../auth/helper'
 import { Link,Redirect } from 'react-router-dom'
 import {createCategory} from "./helper/adminapicall"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddCategory = () => {
 
@@ -36,6 +38,7 @@ const AddCategory = () => {
                     setError("")
                     setName("")
                     setSuccess(true)
+                    toast.success(`${data.category.name} created successfully`,{position:toast.POSITION.TOP_RIGHT,className:'text-light'});     
                 }
             })
     }
@@ -45,21 +48,10 @@ const AddCategory = () => {
             <div className="form-group my-3">
                 <label >Enter Category
                 </label>
-                <input className="form-control" type="text" onChange={handleChange} value={name} autoFocus required placeholder="For Ex. Summer " />
+                <input className="form-control" type="text" onChange={handleChange} value={name} autoFocus required placeholder="For Ex. python " />
                 <button className="btn btn-dark text-light mt-3" onClick={onSubmit} >create category</button>
             </div>
         </form>
-    )
-
-    const successMessage = () => (
-        success && (
-            <div className="alert alert-success alert-dismissible fade show text-center mt-3">
-                category successfully added....
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>                 
-            </div>
-        )
     )
 
     const errorMessage = () => (
@@ -83,7 +75,6 @@ const AddCategory = () => {
                 <div className="col-8 offset-2">
                     {redirect()}
                     {goBack()}
-                    {successMessage()}
                     {errorMessage()}
                     {myCategoryForm()}
                 </div>

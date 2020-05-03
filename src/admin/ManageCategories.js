@@ -3,6 +3,8 @@ import Base from '../core/Base'
 import { Link } from 'react-router-dom'
 import { getCategories,deleteCategory } from './helper/adminapicall'
 import { isAutheticated } from '../auth/helper'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ManageCategories = () => {
@@ -31,8 +33,9 @@ const ManageCategories = () => {
         deleteCategory(categoryId,user._id,token)
         .then(data =>{
             if(data.error){
-                console.log(data.error)
+                toast.info(data.error)
             }else{
+                toast.error(`${data.category.name} deleted successfully`,{position:toast.POSITION.TOP_RIGHT,className:'text-light'});     
                 preload()
             }
         })
