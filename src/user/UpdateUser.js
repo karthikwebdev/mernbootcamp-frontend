@@ -50,7 +50,6 @@ const UpdateUser = () => {
             setValues({...values,error:false})
             updateUser({name, lastname, email},user._id,token)
             .then(data => {
-                console.log(data)
                 if(data.errmsgs){
                     setValues({...values,error:data,success:false})
                     console.log(data)
@@ -60,6 +59,7 @@ const UpdateUser = () => {
                     console.log(data)
                 }
                 else{
+                    console.log(data)
                     setValues({
                         ...values,
                         name:"",
@@ -102,11 +102,11 @@ const UpdateUser = () => {
                )
     }
 
-    const successMessage = () => (
-        success && (
-            <Redirect to="/user/dashboard" />
-        ) 
-    )
+    const successMessage = () => {
+        if(success){
+           return (success && user.role) ?  (<Redirect to="/admin/dashboard" />) :(<Redirect to="/user/dashboard" />)
+        }
+    }
 
     const errorMessage = () => {
         if(error){

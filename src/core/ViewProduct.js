@@ -18,7 +18,6 @@ const ViewProduct = ({match}) => {
                 console.log("err:",data)
             }else{
                 setproduct(data)
-                console.log(data.category.name)
             }
         })
     }
@@ -41,11 +40,12 @@ const ViewProduct = ({match}) => {
             <div className="col-lg-6 col-12">
                 <ImageHelper product={product}/>
             </div>
-            <div className="col-lg-6 col-12 py-5">
+            <div className="col-lg-6 col-12">
                 <h1 className="text-center text-lg-left text-white-50">{product.name}</h1>
                 <h5 className="text-center text-lg-left">{product.description}</h5>
                 <h3 className="text-center text-lg-left display-2"><span className="h5 mr-2">price:</span>${product.price}</h3>
-                <p className="text-muted">Stock Available: {product.stock}</p>
+                <p className="text-muted text-lg-left text-center">Stock Available: {product.stock} </p>
+                <p className="text-muted text-lg-left text-center"> Stock Sold: {product.sold}</p>
                 <button className="btn btn-block btn-success" onClick={addToTheCart}> add to cart </button>
             </div>
         </div>

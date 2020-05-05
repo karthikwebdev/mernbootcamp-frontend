@@ -1,12 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Base from "../core/Base"
-import {isAutheticated} from "../auth/helper/index"
 import { Link } from 'react-router-dom'
+import { isAutheticated } from '../auth/helper'
+import { getUser } from './helper/userapicalls'
+
 
 const AdminDashboard = () => {
 
-    const {user:{name,email,_id}} = isAutheticated()
+    const {token,user} = isAutheticated()
+    const [details, setdetails] = useState({
+        name:"",
+        lastname:"",
+        email:""
+    })
+    const {name,lastname,email} = details
 
+    const preload = () => {
+        getUser(user._id,token)
+        .then(data =>{
+            if(data.error){
+                console.log(data.error)
+            }else{
+                setdetails({
+                    ...details,
+                    name:data.name,
+                    lastname:data.lastname,
+                    email:data.email
+                })
+            }
+        })
+    }
+
+    useEffect(() => {
+        preload()
+    }, [])
+
+ 
     const adminLeftSide = () => {
         return (
             <div className="card">
@@ -47,6 +76,11 @@ const AdminDashboard = () => {
                         Email
                     </span>{email}
                 </li>
+                <li className="list-group-item">
+                    <span className="badge badge-dark mr-2 p-3">
+                        lastname
+                    </span>{lastname}
+                </li>
             </ul>
         </div>
     )
@@ -59,7 +93,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                     {adminRightSide()}
-                <Link className="btn btn-info" to={`/user/update/${_id}`}>Update Details</Link>
+                <Link className="btn btn-info" to={`/user/update/${user._id}`}>Update Details</Link>
                     </div>
                 </div>
         </Base>

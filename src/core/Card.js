@@ -16,6 +16,7 @@ removeFromCart = false,
   const cardDescription = product ? product.description : "a sample photo description"
   const cardPrice = product ? product.price : "price"
   const cardStock = product ? product.stock : "stock"
+  const cardSold = product ? product.sold : "sold"
 
   const addToTheCart = () => {
     addItemToCart(product,(product)=> {
@@ -68,7 +69,8 @@ removeFromCart = false,
                 {cardDescription}
               </p>
               <h1 className=" font-italic text-dark">${cardPrice}</h1>
-              <p className="text-black-50">stock available:{cardStock}</p>
+              <span className="mr-5 text-black-50">stock:{cardStock}</span>
+              <span className="text-black-50">sold:{cardSold}</span>
               <div className="row">
                {showAddToCart(addToCart)}
                 {showRemoveFromCart(removeFromCart)}
