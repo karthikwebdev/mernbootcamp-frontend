@@ -4,9 +4,7 @@ import { isAutheticated } from '../auth/helper'
 import { Link,Redirect } from 'react-router-dom'
 import { updateCategory,getCategory } from './helper/adminapicall'
 
-
 const UpdateCategory = ({match}) => {
-
     
     const [name, setName] = useState("")
     const [error, setError] = useState(false)

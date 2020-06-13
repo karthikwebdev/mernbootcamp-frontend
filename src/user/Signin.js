@@ -71,14 +71,32 @@ const Signin = () => {
     }
         
     const errorMessage = () => {
-                return <div className="container" style={{display: error ?  "" : "none" }}>
-                    <div className="alert alert-danger alert-dismissible fade show">
-                    {JSON.stringify(error)}
-                    <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>                 
-                </div>
-                 </div>
+                if(error){
+                    if(typeof error === "object"){
+                        return (error.map(err =>(
+                            <div className="container" style={{display: error ?  "" : "none" }}>
+                            <div className="alert alert-danger alert-dismissible fade show">
+                                {err.msg}
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>                 
+                        </div>
+                         </div>
+                        )))
+                    }else{
+                        return (
+                            <div className="container" style={{display: error ?  "" : "none" }}>
+                            <div className="alert alert-danger alert-dismissible fade show">
+                                {error}
+                            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>                 
+                        </div>
+                         </div>
+                        )
+                    }
+                    
+                }
             }
 
     const signInForm = () =>{

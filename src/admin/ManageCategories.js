@@ -41,6 +41,7 @@ const ManageCategories = () => {
         })
     }
 
+    
     return (
        <Base title="Manage Categories" description="update and delete your categories here" className="container">
        <Link className="btn btn-info" to={`/admin/dashboard`}>

@@ -40,20 +40,31 @@ const UserDashboard = () => {
                         email:data.email,
                         purchases:sorted
                         })
+                    }else{
+                        setdetails({
+                            ...details,
+                            name:data.name,
+                            lastname:data.lastname,
+                            email:data.email,
+                            purchases:[]
+                            })    
+                        }
                     }
-                    setdetails({
-                        ...details,
-                        name:data.name,
-                        lastname:data.lastname,
-                        email:data.email,
-                        })
-                }
             })
         }
 
     useEffect(() => {
         preload()
     }, [])
+
+
+    const loadOrders = (purchases) =>(purchases.map((value,index)=>
+        value ? (<tr key={index}>
+               <th scope="col">{index+1}</th>
+               <th scope="col">{value.name}</th>
+               <th scope="col">{value.transaction_id}</th>
+               <th scope="col">{value.amount}</th>
+               </tr>): (<h1 className="text-center">no orders yet</h1>) ))
 
     const userDashboard = () =>(
                 <div className="card">
@@ -82,14 +93,7 @@ const UserDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {purchases.map((value,index)=>(
-                            value &&  (<tr key={index}>
-                                <th scope="col">{index+1}</th>
-                                <th scope="col">{value.name}</th>
-                                <th scope="col">{value.transaction_id}</th>
-                                <th scope="col">{value.amount}</th>
-                                </tr>)
-                            ))}
+                           {loadOrders(purchases)}
                         </tbody>
                     </table>
                 </div>

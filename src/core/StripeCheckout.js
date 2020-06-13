@@ -56,7 +56,7 @@ const StripeCheckout = (products) => {
     const showStripeButton = () => {
         return isAutheticated() ? (
             <StripeCheckoutButton 
-            stripeKey="pk_test_QMKZD89sJAUimiPDBud2OUCD00gcbSGhZU"
+            stripeKey="pk_test_sKDAfadz2VUPVpln1yx8EoRL00sUHdj9xD"
             token={makePayment}
             amount={getFinalAmount(products) * 100}
             name="pay for books here"

@@ -24,7 +24,6 @@ export const getCategories = () => {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
 //delete category
 export const deleteCategory = (categoryId, userId,token) =>{
     return fetch(`${API}/category/${categoryId}/${userId}`,{
@@ -38,7 +37,6 @@ export const deleteCategory = (categoryId, userId,token) =>{
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
 //update a category
 export const updateCategory = (categoryId,userId,token,category) => {
     return fetch(`${API}/category/${categoryId}/${userId}`,{
@@ -53,7 +51,6 @@ export const updateCategory = (categoryId,userId,token,category) => {
     .then(res => res.json())
     .catch(err => console.log(err))
 } 
-
 //get a category
 export const getCategory = categoryId =>{
     return fetch(`${API}/category/${categoryId}`,{
@@ -64,7 +61,6 @@ export const getCategory = categoryId =>{
 }
 
 //product calls
-
 //create a product
 export const createaProduct = (userId, token, product) => {
     return fetch(`${API}/product/create/${userId}`,{
@@ -78,7 +74,6 @@ export const createaProduct = (userId, token, product) => {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
 //get all products
 export const getproducts = () => {
     return fetch(`${API}/products`,{
@@ -87,7 +82,6 @@ export const getproducts = () => {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
 //delete a product
 export const deleteProduct = (productId, userId, token) => {
     return fetch(`${API}/product/${productId}/${userId}`,{
@@ -100,7 +94,6 @@ export const deleteProduct = (productId, userId, token) => {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
 //get a product
 export const getProduct = productId =>{
     return fetch(`${API}/product/${productId}`,{
@@ -109,8 +102,6 @@ export const getProduct = productId =>{
     .then(res => res.json())
     .catch(err => console.log(err))
 }
-
-
 //update a product
 export const updateProduct = (productId,userId, token, product) => {
     return fetch(`${API}/product/${productId}/${userId}`,{
@@ -123,4 +114,31 @@ export const updateProduct = (productId,userId, token, product) => {
     })
     .then(res => res.json())
     .catch(err => console.log(err))
+}
+
+//order calls
+//get all the orders
+export const getAllOrders = (userId,token) => {
+    return fetch(`${API}/order/all/${userId}`,{
+        method:'GET',
+        headers:{
+                Accept:"application/json",
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+        }
+        })
+        .then(res => res.json())
+        .catch(err => console.log(err))
+} 
+export const getOrderStatus = (userId,token) => {
+    return fetch(`${API}/order/status/${userId}`,{
+        method:'GET',
+        headers:{
+                Accept:"application/json",
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+        }
+        })
+        .then(res => res.json())
+        .catch(err => console.log(err))
 }

@@ -60,7 +60,7 @@ function Home() {
        )
 
     return (
-        <Base title="{ codezone }" description="root directory for every coder.." className="container">
+        <Base title="{ codeZone }" description="root directory for every Developer.." className="container">
             {selectSortBy()}
             <div className="row">
                {products.map((product,index)=>(

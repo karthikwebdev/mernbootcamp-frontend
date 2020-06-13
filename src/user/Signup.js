@@ -5,7 +5,7 @@ import { signup, validate } from "../auth/helper/index"
 
 const Signup = () => {
 
-    const [values,setValues] = useState({
+    const [ values,setValues ] = useState({
         name:"",
         lastname:"",
         email:"",
@@ -28,13 +28,8 @@ const Signup = () => {
             setValues({...values,error:false})
             signup({name, lastname, email, password})
             .then(data => {
-                if(data.errmsgs){
+                if(data.errmsgs || data.err){
                     setValues({...values,error:data,success:false})
-                    console.log(data)
-                }
-                else if(data.err){
-                    setValues({...values,error:data,success:false})
-                    console.log(data)
                 }
                 else{
                     setValues({
@@ -60,7 +55,7 @@ const Signup = () => {
                 <div className="col-10 offset-1 text-center">
                     <form>
                         <div className="form-group">
-                            <label className="text-light">Name
+                            <label className="text-light">Name*
                                 <input className="form-control" type="text" onChange={handleChange("name")} value={name}/>
                             </label>
                         </div>
@@ -70,18 +65,18 @@ const Signup = () => {
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="text-light">Email
+                            <label className="text-light">Email*
                                 <input type="email" className="form-control" onChange={handleChange("email")} value={email} />
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="text-light">Password
+                            <label className="text-light">Password*
                                 <input type="password" className="form-control" onChange={handleChange("password")} value={password}/>
                                 <span className={validate(password)[2]}>{validate(password)[1]}</span>
                             </label>
                         </div>
                         <div className="form-group">
-                            <label className="text-light">Confirm Password
+                            <label className="text-light">Confirm Password*
                                 <input type="password" className="form-control" onChange={handleChange("confirm")} value={confirm} />
                                 <span className="text-success">{(password === confirm && password !== "" ) ? "matched" : ""}</span>
                             </label>
@@ -124,7 +119,7 @@ const Signup = () => {
             else if(error.err){
                 return (<div className="container">
                      <div className="alert alert-danger alert-dismissible fade show">
-                    {error.err}Email already exists.
+                    {error.err}, Email already exists.
                      <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                          <span aria-hidden="true">&times;</span>
                      </button>                 
