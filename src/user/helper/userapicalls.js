@@ -1,6 +1,4 @@
 import { API } from "../../backend"
-import UpdateUser from "../UpdateUser"
-
 
 export const getUser = (userId,token) =>{
     return fetch(`${API}/user/${userId}`,{
